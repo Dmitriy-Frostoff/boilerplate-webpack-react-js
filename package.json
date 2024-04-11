@@ -1,0 +1,50 @@
+{
+  "name": "boilerplate-react-js",
+  "version": "1.0.0",
+  "description": "It's a boilerplate for usage of react (with hooks) with pure JS in a future project (FSD architecture prior). Check out the docs below to be in actual tune!",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "start": "webpack-dev-server --config ./configs/webpack/webpack.config.js --progress",
+    "dev": "webpack --config ./configs/webpack/webpack.config.js --node-env=development --progress",
+    "build": "webpack --config ./configs/webpack/webpack.config.js --node-env=production --progress"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Dmitriy-Frostoff/boilerplate-react-js"
+  },
+  "keywords": [
+    "webpack",
+    "html",
+    "scss",
+    "css-modules",
+    "js",
+    "components",
+    "FSD",
+    "react"
+  ],
+  "author": "Dmitriy Frostoff",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/Dmitriy-Frostoff/boilerplate-react-js/issues"
+  },
+  "homepage": "https://github.com/Dmitriy-Frostoff/boilerplate-react-js?tab=readme-ov-file#readme",
+  "devDependencies": {
+    "css-loader": "^7.1.1",
+    "html-loader": "^5.0.0",
+    "html-webpack-plugin": "^5.6.0",
+    "image-minimizer-webpack-plugin": "^4.0.0",
+    "imagemin": "^8.0.1",
+    "imagemin-gifsicle": "^7.0.0",
+    "imagemin-jpegtran": "^7.0.0",
+    "imagemin-optipng": "^8.0.0",
+    "imagemin-svgo": "^10.0.1",
+    "mini-css-extract-plugin": "^2.8.1",
+    "resolve-url-loader": "^5.0.0",
+    "sass": "^1.74.1",
+    "sass-loader": "^14.1.1",
+    "webpack": "^5.91.0",
+    "webpack-cli": "^5.1.4",
+    "webpack-dev-server": "^5.0.4"
+  }
+}
