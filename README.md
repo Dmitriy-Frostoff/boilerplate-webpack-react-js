@@ -129,7 +129,7 @@ But the best possible way for nowdays is to use appropriate to your goals archit
 
 - `configs/` - the folder includes config files for: Babel package currently. It's possible to add `prettier/eslint/husky` to the boilerplate from [boilerplate-eslint-prettier-husky](https://github.com/Dmitriy-Frostoff/boilerplate-eslint-prettier-husky);
 
-**[FSD structure](https://feature-sliced.design/docs/get-started/overview "FSD structure official docs")**  
+**[FSD structure](https://feature-sliced.design/docs/get-started/overview 'FSD structure official docs')**  
 <a href="https://feature-sliced.design/docs/get-started/overview" target="_blank">  
  <img width="50%" height="50%" src="https://feature-sliced.design/assets/images/visual_schema-e826067f573946613dcdc76e3f585082.jpg" alt="Feature-Sliced Design Basics"/>
 </a>
@@ -202,14 +202,14 @@ But the best possible way for nowdays is to use appropriate to your goals archit
 
 ```js
 // projectName/src/app/index.js
-import "./index.scss";
+import './index.scss';
 ```
 
 than
 
 ```js
 // projectName/src/index.js
-import "./app/index.js";
+import './app/index.js';
 ```
 
 to clarify the `Webpack` to handle it correctly.
@@ -218,7 +218,7 @@ If there's a need to use imported as a data (e.g. import `.html` file to handle 
 
 ```js
 // projectName/src/app/index.js
-import anyNameYouWish from "../pages/index.html";
+import anyNameYouWish from '../pages/index.html';
 export { anyNameYouWish };
 ```
 
@@ -226,14 +226,76 @@ than
 
 ```js
 // projectName/src/index.js
-import "./app/index.js"; /*e.g. to import index.scss from example above (to demand Webpack load global styles)
+import './app/index.js'; /*e.g. to import index.scss from example above (to demand Webpack load global styles)
 this is only to show, that it possible to use import 'entireModule' and import {something} from 'entireModule'
 */
-import { anyNameYouWish } from "./app/index.js";
+import { anyNameYouWish } from './app/index.js';
 ```
 
 If there're files like `chunk.abc5d.(css|js|anyExt)` in the `dist` folder so take care of correctness of usage
 dynamic `import()`s because exactly it usage (that is `async` naturally) trigger Webpack to emit `fileChunks` [read more here](https://github.com/webpack/webpack/issues/12464).
+
+#### Best practicies
+
+- **Why to import file into `jsx module` and than use it as `props` in the component**
+
+Benefits:
+
+1. **Dependency Management**: When you import an image, you explicitly specify the dependency between your component and this file. This makes it easier to keep track of which resources are being used and where.
+
+2. **Module Collector processing**: Module collectors such as Webpack can optimize resource utilization. They can change paths, add hashes for caching, minimize file size, and more.
+
+3. **Modularity**: Importing makes your components more modular and reusable. You can move the component to another location, and all its dependencies (including images) will "move" with it.
+
+4. **Ease of updating**: If you need to replace an image, you just change the import in one place, and this change will automatically apply wherever this component is used.
+
+5. **Performance**: Module builders can "lazily" load images (lazy loading), which improves page loading time and performance.
+
+To implement the approach correctly:
+
+- import desired asset file (image, song, video etc)
+
+```jsx
+import React, { StrictMode } from 'react';
+import desiredAssetWithFileNameYouWish from 'path/to/file.extension';
+```
+
+- create component. e.g.:
+
+```jsx
+export function ExampleComponent() {
+  return (
+    <>
+      <div>
+        <img
+          src={desiredAssetWithFileNameYouWish}
+          alt="alternative description"
+        />
+      </div>
+    </>
+  );
+}
+```
+
+- **may be far not the best practice ever but in some cases rather useful**
+  specify `props` and `props.children` in the `.jsx` (primarly for components only containing HTML markup, e.g. `projectName/src/widgets/main/ui/index.jsx`) to ease the process of nesting component inside the parent one (more precisely, this is only to read a one more time about `React props and porps.children` because `React` handle `props` specifyed/not specifyed - automatically and perfectly!!!)  
+  e.g.:
+
+  ```jsx
+  import React, { StrictMode } from 'react';
+
+  export function ExampleComponent(props) {
+    return (
+      <section className="layout-one-column container example__container">
+        {props.children}
+      </section>
+    );
+  }
+  ```
+
+  where `props` all the properties the initialized component contains currently, `props.children` all the component's children.
+
+  P.S. without explicit `props` and `{props.children}` specifying it works nice too)))
 
 ### Integration with [`Connections`](#Connections) links:
 
