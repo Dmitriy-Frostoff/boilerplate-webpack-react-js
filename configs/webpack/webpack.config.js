@@ -5,6 +5,7 @@ import HtmlWebpackPlugin from 'html-webpack-plugin';
 import MiniCssExtractPlugin from 'mini-css-extract-plugin';
 
 import ImageMinimizerPlugin from 'image-minimizer-webpack-plugin';
+import { config } from 'process';
 
 const mode = process.env.NODE_ENV || 'development';
 const devMode = mode === 'development';
@@ -63,6 +64,16 @@ export default {
   ],
   module: {
     rules: [
+      {
+        test: /\.(?:js|mjs|cjs|jsx)$/,
+        exclude: /node_modules/,
+        use: {
+          loader: 'babel-loader',
+          options: {
+            configFile: path.resolve(__dirname, '../babel/babel.config.js'),
+          },
+        },
+      },
       {
         test: /\.html$/i,
         loader: 'html-loader',

@@ -1,17 +1,18 @@
 # boilerplate-react-js
 
-It's a boilerplate for usage of `webpack 5+`, `html`, `scss/css`, `js`, `react`. (everything of that is meant to be `components` and `webpack` are for bundling and connecting parts together) in a future project. Check out the docs below to be in `actual tune`!
+It's a boilerplate for usage of `webpack 5+`, `html`, `scss/css`, `js` with `react` library as core concept. (everything of that is meant to be `components` and `webpack` are for bundling and connecting parts together) in a future project. Check out the docs below to be in `actual tune`!
 
----
+**note**: pay attention - the boilerplate is contains primarly only `babel`, `react` and `react-dom` and it is must be integrated into [boilerplate-webpack-gulp-html-css-js-components](https://github.com/Dmitriy-Frostoff/boilerplate-webpack-gulp-html-scss-js-components)! Also pay attention that `react` and `react-dom` must be installed as **Project dependencies**!
 
 ### !Important
 
-- While using modules always set an extension to the imported file's path! Even for `*.js` files! Or you'll get an exception and `webpack` will crash. Otherwise add the `resolve.extensions` to the `webpack.config.js` to solve this:
+- While using modules always set an extension to the imported file's path! Even for `*.js`, `*.jsx` files! Or you'll get an exception and `webpack` will crash. Otherwise add the `resolve.extensions` to the `webpack.config.js` to solve this:
 
 ```js
 export default {
+  ...
   resolve: {
-    extensions: [".jsx", ".js"],
+    extensions: ['.jsx', '.js'],
   },
 };
 ```
@@ -24,7 +25,7 @@ export default {
   - `webpack.config.js` all the occurrences of `projectName` in the `entry`, `output` etc (path: `./configs/webpack/webpack.config.js`);
   - `index.js` all the occurrences of `projectName` (path: `projectName/src/index.js`);
   - `projectNameSelfCheck` and all subfolders and files inside (path: `projectName/src/shared/projectNameSelfCheck/index.js`);
-  - `_head.html` project `title` and `meta.content` (path: `projectName/src/widgets/head/_head.html`)
+  - `index.html` project `title` and `meta.content` (path: `projectName/src/pages/index.html` or `projectName/src/widgets/head/_head.html` for only `_head.html` chunk usage in component with `.jsx`)
 - files with extension `.gitkeep` are only for adding `empty folders` to the staging area and for continious committing. Since the folder turn to be not empty you can for sure delete this files (they are for nothing but only for saving folder structure (check the link for more [what is .gitkeep for?](https://stackoverflow.com/questions/115983/how-do-i-add-an-empty-directory-to-a-git-repository)));
 - check `./configs/webpack/webpack.config.js` before usage using CLI command for no errors:
   `npx webpack configtest [config-path]` so currently => `npx webpack configtest ./configs/webpack/webpack.config.js`
@@ -65,13 +66,11 @@ The boilerplate is set to use ECMAScript modules (ESM) (see the `package.json` =
 
 #### webpack
 
-`webpack` is turned to bundle all assets and reduce final bundle (for example: images are minimized as possible) to have as result `main.js`, `index.html`, `main.css` and `src/assets` (file structure is save as is! check my custom made function in the `output.assetModuleFilename`. It was made relying on this [webpack 5 assetModuleFilename stackoverflow.com](https://stackoverflow.com/questions/68814833/webpack-5-assets-module-how-to-keep-the-folder-structure-in-the-output-folder)).
-
-Also there's a helper functions to deal with files when they are renamed with additional hash and to import all the assets to the bundle (to use them in future, e.g. not currently desired image, and next one too) (check the `projectName/src/shared/utilities/handleFilesWithDynamicHash/index.js` file for `getCashedFilename` and `importAll` functions)
-(check this [webpack official docs link about the dealing with files' hash](https://webpack.js.org/guides/dependency-management/#context-module-api) and [How to copy all images to dist folder instead of only used with webpack 5 stackoverflow.com](https://stackoverflow.com/questions/69120556/how-to-copy-all-images-to-dist-folder-instead-of-only-used-with-webpack-5)).
+`webpack` is turned to use `React` library with `Babel` and to bundle all assets and reduce final bundle (for example: images are minimized as possible) to have as result `main.js`, `index.html`, `main.css` and `src/assets` (file structure is save as is! check my custom made function in the `output.assetModuleFilename`. It was made relying on this [webpack 5 assetModuleFilename stackoverflow.com](https://stackoverflow.com/questions/68814833/webpack-5-assets-module-how-to-keep-the-folder-structure-in-the-output-folder)).
 
 `webpack` uses:
 
+- `babel-loader`, `"@babel/core`, `@babel/preset-react` for ability to load and handle `.jsx` and `React` components in the `*.js` files. As is it's assumed to use actual ECMAScript standard in `.(js|jsx)` files and just transform `React` syntax into `React.createElement()` function usage for ability to handle it with `Webpack`;
 - `html-loader` for ability to load `.html` files into `*.js` one;
 - `html-webpack-plugin` to nest final `script.js` file (currently to the `head` of html file. Check `inject: 'head'` option in the `./configs/webpack/webpack.config.js` HtmlWebpackPlugin options) and final `main.css` styles file to the final html template.
 - `image-minimizer-webpack-plugin`, `imagemin`, `imagemin-gifsicle`, `imagemin-jpegtran`, `imagemin-optipng`, `imagemin-svgo` - a fable things to reduce size of the image resources with lossless quality optimization (can be changed, use offical docs for more);
@@ -79,6 +78,11 @@ Also there's a helper functions to deal with files when they are renamed with ad
 - `resolve-url-loader` - loader for Sass to ease assets pathes' setting relying on current file but not to the output one (**note**: `sourceMap: true` in the `sass-loader` options is lifeworth required for working the plugin!!!);
 - `sass` - for using all SCSS / Sass features;
 - `sass-loader` - loader for ability to read and use `.scss` / `.sass` files inside `*.js` one;
+
+#### Babel
+
+`Babel` as mentioned above is used to transform `React` syntax into `Webpack`'s appropriate one. Also there's a lot of possibilities to use this powerful tool. E.g. for transforming actual ECMAScript into older one for legacy browsers support via `@babel/preset-env` preset usage. Check the `babel` docs for more [Babel docs](https://babeljs.io/docs/).
+Also check the current `babel.config.js` for details (path: `configs/babel/babel.config.js`).
 
 #### SCSS / Sass
 
@@ -115,19 +119,17 @@ are `css-modules` with `local` scope.
 
 #### JavaScript / Component approach
 
-`JS` rules all the things inside the boilerplate. The only and one. Entire boilerplate structure is made for only the goal - turn everything into the hierarchical components (React one and other Frameworks like), where every component is as much as possible unconnected and incapsulated unit for maximum reusage by higher ordered ones in a project (it's must be the only strict linear connection from higher standing components to lower one due to Feature-Sliced Design(FSD) architecture principle!).
+`JS` rules all the things inside the boilerplate. The only and one. Entire boilerplate structure is made for only the goal - turn everything into the hierarchical components (`React` one and other Frameworks like), where every component is as much as possible unconnected and incapsulated unit for maximum reusage by higher ordered ones in a project (it's must be the only strict linear connection from higher standing components to lower one due to Feature-Sliced Design(FSD) architecture principle!).
 
-There're chunks like `_<component_filename>.html`, `_<component_filename>.scss` and optional `_<component_filename>.js` It's possible to include them into upper - standing `index.js` using `webpack` features of loaders and some utilities for creating `html templates`. The `index.js` plays a role of `public api` for other components to import and usage.
+There're chunks like `_<component_filename>.html`, `_<component_filename>.scss` and optional `_<component_filename>.(js|jsx)` It's possible to include them into upper - standing `index.js` using `webpack` features of loaders. The `index.js` plays a role of `public api` for other components to import and usage.
 
-There's a `htmlCreateComponentHelper` custom made by myself simple utility (commonly used pattern like factory), that gives an oportunity to create `html templates` to use in a Single Page Aplication (SPA) (nest `html template` on demand with JS usage, React style like) (check for more about the component approach implementation [the Rolling Scopes School lecture (RU) by mentor Viktar Kovalev](https://www.youtube.com/watch?v=Edue1LmnZqo));
-
-But the best possible way for nowdays is to use appropriate to your goals architecture (MVC, MVP, MVVM, Module Architecture, Atomic Design, Feature-Sliced Design(FSD) etc). The boilerplate structure is turned to use FSD architecture (to learn more about FSD check the [FSD official docs](https://feature-sliced.design/docs/get-started)).
+But the best possible way for nowdays is to use appropriate to your goals architecture (MVC, MVP, MVVM, Module Architecture, Atomic Design, Feature-Sliced Design(FSD) etc) with the power of `reactive frameworks and libraries` usage for creating `Single Page Applications` (`SPA`) or similar `applications`. The boilerplate structure is turned to use `FSD architecture` with `React` (to learn more about `FSD` check the [FSD official docs](https://feature-sliced.design/docs/get-started) and [React official website](https://react.dev/)).
 
 ### The boilerplate structure and brief descriptions:
 
-- `configs/` - the folder includes config files for: webpack packages. It's possible to add prettier/eslint/husky to the boilerplate from [boilerplate-eslint-prettier-husky](https://github.com/Dmitriy-Frostoff/boilerplate-eslint-prettier-husky);
+- `configs/` - the folder includes config files for: Babel package currently. It's possible to add `prettier/eslint/husky` to the boilerplate from [boilerplate-eslint-prettier-husky](https://github.com/Dmitriy-Frostoff/boilerplate-eslint-prettier-husky);
 
-**[FSD structure](https://feature-sliced.design/docs/get-started/overview "FSD structure official docs")**  
+**[FSD structure](https://feature-sliced.design/docs/get-started/overview 'FSD structure official docs')**  
 <a href="https://feature-sliced.design/docs/get-started/overview" target="_blank">  
  <img width="50%" height="50%" src="https://feature-sliced.design/assets/images/visual_schema-e826067f573946613dcdc76e3f585082.jpg" alt="Feature-Sliced Design Basics"/>
 </a>
@@ -147,7 +149,7 @@ But the best possible way for nowdays is to use appropriate to your goals archit
   - `projectName/src/shared/projectNameSelfCheck` - `slice`, there's a template function for logging self - check of the task (the Rolling Scopes School for only. Can be deleted easily and don't forget to delete the file's import from `projectName/src/index.js`!);
   - `projectName/src/shared/ui` - `slice`, there're commonly used by high-ordered `slices` UI parts:
 
-    - `projectName/src/shared/ui/common styles`, `segment`: - commonly used styles
+    - `projectName/src/shared/ui/common styles` - `segment`, commonly used styles
 
       - `projectName/src/components/abstracts` - `segment`, contains parts that are used in a entire future project. There's animations, constants, mixins (like simple functions but in Sass/SCSS), placeholders (behaves a bit like variables in Sass but more powerfull. Check the official docs for more).
         Take a notice: `projectName/src/shared/ui/common styles/abstracts/_constants.scss` turn to use `CSS variables`! It's far convenient for the result css file (`DRY` principle as is);
@@ -159,13 +161,11 @@ But the best possible way for nowdays is to use appropriate to your goals archit
 
       - `projectName/src/components/layout` - `segment`, includes `_content-structure.scss` file with basic layouts to use in a future project (one column or multiple columns as basic (or foundation as you wish) and they can be easily added with the necessary property modificators of new styling classes (e.g. for current paragraph or section to align everything to the center etc as BEM recommends, behaves like `CSS frameworks'` classes do)) (`_content-structure.scss` rely on `flex` or `grid` basics, also depend on mixins in the `projectName/src/shared/ui/common styles/abstracts/_mixins.scss` file so check it out or modify for your needs);
 
-  - `projectName/src/shared/utilities` - `segment`, contains utilities and helpers commonly used in the entire app:
+  - `projectName/src/shared/utilities` - `segment`, contains utilities and helpers commonly used in the entire app (assumed to take them from [boilerplate-webpack-gulp-html-css-js-components](https://github.com/Dmitriy-Frostoff/boilerplate-webpack-gulp-html-scss-js-components));
 
     - `projectName/src/shared/utilities/handleFilesWithDynamicHash` - `segment`, the utility to handle appropriately with the files with dynamically generated name hashes. Check the example and docs inside the `projectName/src/shared/utilities/handleFilesWithDynamicHash/getCashedFilename.js` for more;
 
     - `projectName/src/shared/utilities/handleFilesWithDynamicHash` - `segment`, the utility to improt all files from folder (to nest it to the bundle). Check the example and docs inside the `projectName/src/shared/utilities/handleFilesWithDynamicHash/importAllfromFolder.js` for more;
-
-    - `projectName/src/shared/utilities/htmlCreateComponent` - `segment`, as described above it's an utility to turn your `*.html` chunk file improted to the `*.js` code into the `html template` to use it in your app (e.g. in a `SPA`). Check the example and docs inside the `projectName/src/shared/utilities/htmlCreateComponent/htmlCreateComponentHelper.js` for more;
 
   **all the next (or higher - ordered `slices`) include Public API `index.js` directly inside the slice (folder) to interract with higher - ordered slices or head - chief over the slices `index.js` file. Use them only to import necessary parts / functionality and to keep `slices` encapsulation**
 
@@ -179,7 +179,7 @@ But the best possible way for nowdays is to use appropriate to your goals archit
      More descriptions: contains the route components for each page in the app, mostly composition, hardly any logic.
      Within that application, let's consider a post card in a news feed. Simple words say: it's an entire ready page that contain `widgets` or `layers` below it in the hierarchy (**strictly** below ones!!!);
 
-  - `projectName/src/pages/index.html` - described right above;
+  - `projectName/src/pages/index.html` - it's template page (or initial page) for first `SPA` predefined view and it's a base for `React` injection into the page via `<div id="root"></div>` in the body (the `index.html` from [boilerplate-webpack-gulp-html-css-js-components](https://github.com/Dmitriy-Frostoff/boilerplate-webpack-gulp-html-scss-js-components) must be replace with this one!);
 
   6. `projectName/src/processes` (deprecated) — complex inter-page scenarios. (e.g., authentication);
   7. `projectName/src/app` — app-wide settings, styles and providers.
@@ -194,7 +194,7 @@ But the best possible way for nowdays is to use appropriate to your goals archit
 - .`gitignore` - exlude node_modules from git watching and more settings (check out the file);
 - `LICENSE` - license file;
 - `package.json` - the heart of all.
-  Check the scripts (especially, the pathes for webpack configs. Currently: './configs/...'). Scripts already have CLI prefixes to link with config and ignore files;
+  Check the scripts (especially, the pathes for webpack configs. Currently: `'./configs/...'`). Scripts already have CLI prefixes to link with config and ignore files;
 
 [Also useful link(RU) about the FSD architecture with clear definition and examples by @IrkaTyman](https://habr.com/ru/articles/795823/);
 
@@ -202,14 +202,14 @@ But the best possible way for nowdays is to use appropriate to your goals archit
 
 ```js
 // projectName/src/app/index.js
-import "./index.scss";
+import './index.scss';
 ```
 
 than
 
 ```js
 // projectName/src/index.js
-import "./app/index.js";
+import './app/index.js';
 ```
 
 to clarify the `Webpack` to handle it correctly.
@@ -218,7 +218,7 @@ If there's a need to use imported as a data (e.g. import `.html` file to handle 
 
 ```js
 // projectName/src/app/index.js
-import anyNameYouWish from "../pages/index.html";
+import anyNameYouWish from '../pages/index.html';
 export { anyNameYouWish };
 ```
 
@@ -226,10 +226,10 @@ than
 
 ```js
 // projectName/src/index.js
-import "./app/index.js"; /*e.g. to import index.scss from example above (to demand Webpack load global styles)
+import './app/index.js'; /*e.g. to import index.scss from example above (to demand Webpack load global styles)
 this is only to show, that it possible to use import 'entireModule' and import {something} from 'entireModule'
 */
-import { anyNameYouWish } from "./app/index.js";
+import { anyNameYouWish } from './app/index.js';
 ```
 
 If there're files like `chunk.abc5d.(css|js|anyExt)` in the `dist` folder so take care of correctness of usage
@@ -237,30 +237,66 @@ dynamic `import()`s because exactly it usage (that is `async` naturally) trigger
 
 ### Integration with [`Connections`](#Connections) links:
 
+**The [boilerplate-webpack-gulp-html-css-js-components](https://github.com/Dmitriy-Frostoff/boilerplate-webpack-gulp-html-scss-js-components) must be installed because the boilerplate is only addon for it and strongly require it!**
+
 To integrate the boilerplate do the following steps (**note**: copy the project structure as is!!!):
 
-- add the following lines to the `package.json`:
-
-```json
-...
-"type": "module",
-"scripts": {
-  "start": "webpack-dev-server --config ./configs/webpack/webpack.config.js --progress",
-  "dev": "webpack --config ./configs/webpack/webpack.config.js --node-env=development --progress",
-  "build": "webpack --config ./configs/webpack/webpack.config.js --node-env=production --progress"
-},
-...
-```
+- do all the steps in [boilerplate-webpack-gulp-html-scss-js-components](https://github.com/Dmitriy-Frostoff/boilerplate-webpack-gulp-html-scss-js-components) first (and then install all desired from [`Connections`](#Connections)) and then come back here;
 
 - copy the `configs`, `projectName`, `.browserslistrc`, `.editorconfig`, `.gitignore` (optionally);
 
 - install current packages as `devDependencies` via bash command below:
 
 ```bash
-npm i -D css-loader html-loader html-webpack-plugin image-minimizer-webpack-plugin imagemin imagemin-gifsicle imagemin-jpegtran imagemin-optipng imagemin-svgo mini-css-extract-plugin resolve-url-loader sass sass-loader webpack webpack-cli webpack-dev-server
+npm i -D @babel/core @babel/preset-react @commitlint/cli babel-loader eslint-config-airbnb eslint-plugin-react eslint-plugin-react-hooks
+```
+
+- install current packages as `dependencies` via bash command below:
+
+```bash
+npm i react react-dom
 ```
 
 - do all the steps from the top of the document's [# !Important](#!Important) (i.e. rename `projectName`, delete unnecessary files);
+
+- add to the `webpack.config.js`(`configs/webpack/webpack.config.js`) 's `module.rules`:
+
+```js
+{
+  test: /\.(?:js|mjs|cjs|jsx)$/,
+  exclude: /node_modules/,
+  use: {
+    loader: 'babel-loader',
+    options: {
+      configFile: path.resolve(__dirname, '../babel/babel.config.js'),
+    },
+  },
+},
+```
+
+this is required for `Webpack` to handle `React` syntax;
+
+- add to the `.eslintrc.cjs`(`configs/eslint/.eslintrc.cjs`) `overrides` (the [boilerplate-eslint-prettier-husky](https://github.com/Dmitriy-Frostoff/boilerplate-eslint-prettier-husky) required!):
+
+```js
+{
+  files: ['*.js', '*.jsx'],
+  extends: [
+    'airbnb-base',
+    'airbnb',
+    'plugin:react/recommended',
+    'plugin:react-hooks/recommended',
+    'prettier',
+    'prettier/react',
+  ],
+  plugins: ['react', 'react-hooks'],
+  parserOptions: {
+    ecmaFeatures: {
+      jsx: true,
+    },
+  },
+},
+```
 
 With the new `packages` releases, the ones above can turn to pumpkin, so check'em out with official docs!!!
 
@@ -279,6 +315,35 @@ With the new `packages` releases, the ones above can turn to pumpkin, so check'e
 
 ---
 
+#### React
+
+- [The official website of the React library](https://react.dev/);
+- [The official website of the Redux library for global state management](https://redux.js.org/);
+- [The official website of the MobX library for global state management](https://mobx.js.org/README.html);
+- [The official website of the Zustand library for global state management](https://docs.pmnd.rs/zustand/getting-started/introduction);
+- [The official website of the effector UI-logic](https://effector.dev/ru/);
+- [The official website of the Next.js The React Framework for the Web](https://nextjs.org/);
+
+---
+
+#### Babel
+
+- [The official website of the Babel](https://babeljs.io/docs/);
+- [The official page of the @babel/core at npmjs.com](https://www.npmjs.com/package/@babel/core);
+- [The official page of the @babel/preset-env at npmjs.com](https://www.npmjs.com/package/@babel/preset-env);
+- [The official page of the @babel/preset-react at npmjs.com](https://www.npmjs.com/package/@babel/preset-react);
+
+---
+
+#### ESLint:
+
+- [The official page of the eslint-plugin-react at npmjs.com](https://www.npmjs.com/package/eslint-plugin-react);
+- [The official github repo of the eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react);
+- [The official page of the eslint-plugin-react-hooks at npmjs.com](https://www.npmjs.com/package/eslint-plugin-react-hooks);
+- [The official page of the eslint-config-airbnb at npmjs.com](https://www.npmjs.com/package/eslint-config-airbnb);
+
+---
+
 #### Webpack
 
 - [The official docs of Webpack](https://webpack.js.org/api/);
@@ -292,6 +357,9 @@ With the new `packages` releases, the ones above can turn to pumpkin, so check'e
 - [Official github repo of webpack-cli](https://github.com/webpack/webpack-cli);
 - [Official github repo of webpack-dev-server](https://github.com/webpack/webpack-dev-server);
 - [The official awesome webpack resources, libraries, tools and applications](https://webpack.js.org/awesome-webpack/#utility);
+- [Official page of babel-loader at webpack.js.org](https://webpack.js.org/loaders/babel-loader/);
+- [Official page of the babel-loader at npmjs.com](https://www.npmjs.com/package/babel-loader);
+- [Official github repo of babel-loader](https://webpack.js.org/loaders/babel-loader/);
 - [Official webpack docs: html-loader](https://webpack.js.org/loaders/html-loader/#root);
 - [Official github repo of html-loader](https://github.com/webpack-contrib/html-loader);
 - [Official webpack docs: html-webpack-plugin](https://webpack.js.org/plugins/html-webpack-plugin/#root);
@@ -340,5 +408,6 @@ With the new `packages` releases, the ones above can turn to pumpkin, so check'e
 
 - [boilerplate-eslint-prettier-husky](https://github.com/Dmitriy-Frostoff/boilerplate-eslint-prettier-husky);
 - [boilerplate-jest](https://github.com/Dmitriy-Frostoff/boilerplate-jest);
+- [boilerplate-webpack-gulp-html-scss-js-components](https://github.com/Dmitriy-Frostoff/boilerplate-webpack-gulp-html-scss-js-components);
 
-#### done: April 11, 2024
+#### done: April 21, 2024
