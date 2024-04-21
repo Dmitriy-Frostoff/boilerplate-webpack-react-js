@@ -129,7 +129,7 @@ But the best possible way for nowdays is to use appropriate to your goals archit
 
 - `configs/` - the folder includes config files for: Babel package currently. It's possible to add `prettier/eslint/husky` to the boilerplate from [boilerplate-eslint-prettier-husky](https://github.com/Dmitriy-Frostoff/boilerplate-eslint-prettier-husky);
 
-**[FSD structure](https://feature-sliced.design/docs/get-started/overview 'FSD structure official docs')**  
+**[FSD structure](https://feature-sliced.design/docs/get-started/overview "FSD structure official docs")**  
 <a href="https://feature-sliced.design/docs/get-started/overview" target="_blank">  
  <img width="50%" height="50%" src="https://feature-sliced.design/assets/images/visual_schema-e826067f573946613dcdc76e3f585082.jpg" alt="Feature-Sliced Design Basics"/>
 </a>
@@ -202,14 +202,14 @@ But the best possible way for nowdays is to use appropriate to your goals archit
 
 ```js
 // projectName/src/app/index.js
-import './index.scss';
+import "./index.scss";
 ```
 
 than
 
 ```js
 // projectName/src/index.js
-import './app/index.js';
+import "./app/index.js";
 ```
 
 to clarify the `Webpack` to handle it correctly.
@@ -218,7 +218,7 @@ If there's a need to use imported as a data (e.g. import `.html` file to handle 
 
 ```js
 // projectName/src/app/index.js
-import anyNameYouWish from '../pages/index.html';
+import anyNameYouWish from "../pages/index.html";
 export { anyNameYouWish };
 ```
 
@@ -226,10 +226,10 @@ than
 
 ```js
 // projectName/src/index.js
-import './app/index.js'; /*e.g. to import index.scss from example above (to demand Webpack load global styles)
+import "./app/index.js"; /*e.g. to import index.scss from example above (to demand Webpack load global styles)
 this is only to show, that it possible to use import 'entireModule' and import {something} from 'entireModule'
 */
-import { anyNameYouWish } from './app/index.js';
+import { anyNameYouWish } from "./app/index.js";
 ```
 
 If there're files like `chunk.abc5d.(css|js|anyExt)` in the `dist` folder so take care of correctness of usage
@@ -239,7 +239,7 @@ dynamic `import()`s because exactly it usage (that is `async` naturally) trigger
 
 **The [boilerplate-webpack-gulp-html-css-js-components](https://github.com/Dmitriy-Frostoff/boilerplate-webpack-gulp-html-scss-js-components) must be installed because the boilerplate is only addon for it and strongly require it!**
 
-To integrate the boilerplate do the following steps (**note**: copy the project structure as is!!!):
+To integrate the boilerplate do the following steps (**note**: copy the project structure as is!!! Take a notice to the `projectName/src/shared/ui/common styles/base/_common.scss` there **must be** styles for `#root`, `.root__container` and `.main__container`):
 
 - do all the steps in [boilerplate-webpack-gulp-html-scss-js-components](https://github.com/Dmitriy-Frostoff/boilerplate-webpack-gulp-html-scss-js-components) first (and then install all desired from [`Connections`](#Connections)) and then come back here;
 
