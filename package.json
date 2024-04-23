@@ -1,7 +1,7 @@
 {
-  "name": "boilerplate-react-js",
+  "name": "boilerplate-webpack-react-js",
   "version": "1.0.0",
-  "description": "It's a boilerplate for usage of react (with hooks) with pure JS in a future project (FSD architecture prior). Check out the docs below to be in actual tune!",
+  "description": "It's a boilerplate for usage of react (with hooks) with pure JS in a future project (FSD architecture prior with Webpack). Check out the docs below to be in actual tune!",
   "main": "index.jsx",
   "type": "module",
   "scripts": {
@@ -11,7 +11,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/Dmitriy-Frostoff/boilerplate-react-js"
+    "url": "git+https://github.com/Dmitriy-Frostoff/boilerplate-webpack-react-js"
   },
   "keywords": [
     "webpack",
@@ -26,9 +26,9 @@
   "author": "Dmitriy Frostoff",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/Dmitriy-Frostoff/boilerplate-react-js/issues"
+    "url": "https://github.com/Dmitriy-Frostoff/boilerplate-webpack-react-js/issues"
   },
-  "homepage": "https://github.com/Dmitriy-Frostoff/boilerplate-react-js?tab=readme-ov-file#readme",
+  "homepage": "https://github.com/Dmitriy-Frostoff/boilerplate-webpack-react-js?tab=readme-ov-file#readme",
   "devDependencies": {
     "@babel/core": "^7.24.4",
     "@babel/preset-react": "^7.24.1",
