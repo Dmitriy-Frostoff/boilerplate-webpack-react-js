@@ -2,7 +2,7 @@
   "name": "boilerplate-react-js",
   "version": "1.0.0",
   "description": "It's a boilerplate for usage of react (with hooks) with pure JS in a future project (FSD architecture prior). Check out the docs below to be in actual tune!",
-  "main": "index.js",
+  "main": "index.jsx",
   "type": "module",
   "scripts": {
     "start": "webpack-dev-server --config ./configs/webpack/webpack.config.js --progress",

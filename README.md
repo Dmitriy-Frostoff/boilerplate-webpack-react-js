@@ -23,7 +23,7 @@ export default {
 - don't forget to rename all the `<project_name>` or `projectName` names to desired one! Also check the following list of files, folders and linked things, to insure about the replacement:
   - `./projectName`;
   - `webpack.config.js` all the occurrences of `projectName` in the `entry`, `output` etc (path: `./configs/webpack/webpack.config.js`);
-  - `index.js` all the occurrences of `projectName` (path: `projectName/src/index.js`);
+  - `index.jsx` all the occurrences of `projectName` (path: `projectName/src/index.jsx`);
   - `projectNameSelfCheck` and all subfolders and files inside (path: `projectName/src/shared/projectNameSelfCheck/index.js`);
   - `index.html` project `title` and `meta.content` (path: `projectName/src/pages/index.html` or `projectName/src/widgets/head/_head.html` for only `_head.html` chunk usage in component with `.jsx`)
 - files with extension `.gitkeep` are only for adding `empty folders` to the staging area and for continious committing. Since the folder turn to be not empty you can for sure delete this files (they are for nothing but only for saving folder structure (check the link for more [what is .gitkeep for?](https://stackoverflow.com/questions/115983/how-do-i-add-an-empty-directory-to-a-git-repository)));
@@ -129,14 +129,14 @@ But the best possible way for nowdays is to use appropriate to your goals archit
 
 - `configs/` - the folder includes config files for: Babel package currently. It's possible to add `prettier/eslint/husky` to the boilerplate from [boilerplate-eslint-prettier-husky](https://github.com/Dmitriy-Frostoff/boilerplate-eslint-prettier-husky);
 
-**[FSD structure](https://feature-sliced.design/docs/get-started/overview 'FSD structure official docs')**  
+**[FSD structure](https://feature-sliced.design/docs/get-started/overview "FSD structure official docs")**  
 <a href="https://feature-sliced.design/docs/get-started/overview" target="_blank">  
  <img width="50%" height="50%" src="https://feature-sliced.design/assets/images/visual_schema-e826067f573946613dcdc76e3f585082.jpg" alt="Feature-Sliced Design Basics"/>
 </a>
 
 - `projectName/src/` - source folder for `layers` of a future project:
 
-  - `projectName/src/index.js` - the top - level high - ordered `Public API file` to load implemented business logic of `layers` (to render up ready app, in React like way say);
+  - `projectName/src/index.jsx` - the top - level high - ordered `Public API file` to load implemented business logic of `layers` (to render up ready app, in React like way say);
 
   1. `projectName/src/shared` - `layer`, there're reusable functionality, detached from the specifics of the project/business. (e.g. UIKit, libs, API).
 
@@ -146,7 +146,7 @@ But the best possible way for nowdays is to use appropriate to your goals archit
   - `projectName/src/shared/assets` - `slice`, there're all the images, icons, fonts, music, video etc sources of a future project as is (includes `segements` in other words);
   - `projectName/src/shared/lib` - `slice`, the libraries commonly used by high - ordered `layers`;
   - `projectName/src/shared/pixel perfect drafts` - `slice`, drafts for desktop, tablet and mobile for usage in the pixel perfect extension in the web browser to check the draft matching (delete it if unnecessary);
-  - `projectName/src/shared/projectNameSelfCheck` - `slice`, there's a template function for logging self - check of the task (the Rolling Scopes School for only. Can be deleted easily and don't forget to delete the file's import from `projectName/src/index.js`!);
+  - `projectName/src/shared/projectNameSelfCheck` - `slice`, there's a template function for logging self - check of the task (the Rolling Scopes School for only. Can be deleted easily and don't forget to delete the file's import from `projectName/src/index.jsx`!);
   - `projectName/src/shared/ui` - `slice`, there're commonly used by high-ordered `slices` UI parts:
 
     - `projectName/src/shared/ui/common styles` - `segment`, commonly used styles
@@ -202,14 +202,14 @@ But the best possible way for nowdays is to use appropriate to your goals archit
 
 ```js
 // projectName/src/app/index.js
-import './index.scss';
+import "./index.scss";
 ```
 
 than
 
-```js
-// projectName/src/index.js
-import './app/index.js';
+```jsx
+// projectName/src/index.jsx
+import "./app/index.js";
 ```
 
 to clarify the `Webpack` to handle it correctly.
@@ -218,18 +218,18 @@ If there's a need to use imported as a data (e.g. import `.html` file to handle 
 
 ```js
 // projectName/src/app/index.js
-import anyNameYouWish from '../pages/index.html';
+import anyNameYouWish from "../pages/index.html";
 export { anyNameYouWish };
 ```
 
 than
 
-```js
-// projectName/src/index.js
-import './app/index.js'; /*e.g. to import index.scss from example above (to demand Webpack load global styles)
+```jsx
+// projectName/src/index.jsx
+import "./app/index.js"; /*e.g. to import index.scss from example above (to demand Webpack load global styles)
 this is only to show, that it possible to use import 'entireModule' and import {something} from 'entireModule'
 */
-import { anyNameYouWish } from './app/index.js';
+import { anyNameYouWish } from "./app/index.js";
 ```
 
 If there're files like `chunk.abc5d.(css|js|anyExt)` in the `dist` folder so take care of correctness of usage
@@ -256,8 +256,8 @@ To implement the approach correctly:
 - import desired asset file (image, song, video etc)
 
 ```jsx
-import React, { StrictMode } from 'react';
-import desiredAssetWithFileNameYouWish from 'path/to/file.extension';
+import React, { StrictMode } from "react";
+import desiredAssetWithFileNameYouWish from "path/to/file.extension";
 ```
 
 - create component. e.g.:
@@ -282,7 +282,7 @@ export function ExampleComponent() {
   e.g.:
 
   ```jsx
-  import React, { StrictMode } from 'react';
+  import React, { StrictMode } from "react";
 
   export function ExampleComponent(props) {
     return (
@@ -320,6 +320,12 @@ npm i react react-dom
 ```
 
 - do all the steps from the top of the document's [# !Important](#!Important) (i.e. rename `projectName`, delete unnecessary files);
+
+- change `webpack.config.js`(`configs/webpack/webpack.config.js`) 's entry point:
+
+```jsx
+entry: [path.resolve(__dirname, '../../projectName/src/index.jsx')],
+```
 
 - add to the `webpack.config.js`(`configs/webpack/webpack.config.js`) 's `module.rules`:
 
@@ -472,4 +478,4 @@ With the new `packages` releases, the ones above can turn to pumpkin, so check'e
 - [boilerplate-jest](https://github.com/Dmitriy-Frostoff/boilerplate-jest);
 - [boilerplate-webpack-gulp-html-scss-js-components](https://github.com/Dmitriy-Frostoff/boilerplate-webpack-gulp-html-scss-js-components);
 
-#### done: April 21, 2024
+#### done: April 24, 2024
