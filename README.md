@@ -354,9 +354,10 @@ this is required for `Webpack` to handle `React` syntax;
     'airbnb',
     'plugin:react/recommended',
     'plugin:react-hooks/recommended',
+    'jsx-a11y/strict',
     'prettier',
   ],
-  plugins: ['react', 'react-hooks'],
+  plugins: ['react', 'react-hooks', 'jsx-a11y'],
   parserOptions: {
     ecmaFeatures: {
       jsx: true,
@@ -482,4 +483,4 @@ With the new `packages` releases, the ones above can turn to pumpkin, so check'e
 - [boilerplate-jest](https://github.com/Dmitriy-Frostoff/boilerplate-jest);
 - [boilerplate-webpack-gulp-html-scss-js-components](https://github.com/Dmitriy-Frostoff/boilerplate-webpack-gulp-html-scss-js-components);
 
-#### done: June 15, 2024
+#### done: August 24, 2024
