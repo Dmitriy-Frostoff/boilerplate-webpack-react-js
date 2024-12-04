@@ -7,7 +7,8 @@
   "scripts": {
     "start": "webpack-dev-server --config ./configs/webpack/webpack.config.js --progress",
     "dev": "webpack --config ./configs/webpack/webpack.config.js --node-env=development --progress",
-    "build": "webpack --config ./configs/webpack/webpack.config.js --node-env=production --progress"
+    "build": "webpack --config ./configs/webpack/webpack.config.js --node-env=production --progress",
+    "update:packages": "node ./configs/execa/main.js"
   },
   "repository": {
     "type": "git",
@@ -21,7 +22,8 @@
     "js",
     "components",
     "FSD",
-    "react"
+    "react",
+    "execa"
   ],
   "author": "Dmitriy Frostoff",
   "license": "MIT",
@@ -31,11 +33,12 @@
   "homepage": "https://github.com/Dmitriy-Frostoff/boilerplate-webpack-react-js?tab=readme-ov-file#readme",
   "devDependencies": {
     "@babel/core": "^7.26.0",
-    "@babel/preset-react": "^7.25.9",
+    "@babel/preset-react": "^7.26.3",
     "babel-loader": "^9.2.1",
     "eslint-config-airbnb": "^19.0.4",
     "eslint-plugin-react": "^7.37.2",
-    "eslint-plugin-react-hooks": "^4.6.2"
+    "eslint-plugin-react-hooks": "^4.6.2",
+    "execa": "^9.5.1"
   },
   "dependencies": {
     "react": "^18.3.1",
