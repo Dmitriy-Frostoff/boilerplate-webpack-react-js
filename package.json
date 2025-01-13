@@ -36,7 +36,7 @@
     "@babel/preset-react": "^7.26.3",
     "babel-loader": "^9.2.1",
     "eslint-config-airbnb": "^19.0.4",
-    "eslint-plugin-react": "^7.37.3",
+    "eslint-plugin-react": "^7.37.4",
     "eslint-plugin-react-hooks": "^4.6.2",
     "execa": "^9.5.2"
   },
