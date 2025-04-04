@@ -32,11 +32,11 @@
   },
   "homepage": "https://github.com/Dmitriy-Frostoff/boilerplate-webpack-react-js?tab=readme-ov-file#readme",
   "devDependencies": {
-    "@babel/core": "^7.26.7",
+    "@babel/core": "^7.26.10",
     "@babel/preset-react": "^7.26.3",
-    "babel-loader": "^9.2.1",
+    "babel-loader": "^10.0.0",
     "eslint-config-airbnb": "^19.0.4",
-    "eslint-plugin-react": "^7.37.4",
+    "eslint-plugin-react": "^7.37.5",
     "eslint-plugin-react-hooks": "^4.6.2",
     "execa": "^9.5.2"
   },
